@@ -21,7 +21,7 @@ class index_controller extends base_controller {
 		# Now set the <title> tag
 			$this->template->title = "Welcome";
 		
-			$this->tempate->content->user = $user;
+			#$this->tempate->content->user = $user;
 				
 		# CSS/JS includes
 			/*

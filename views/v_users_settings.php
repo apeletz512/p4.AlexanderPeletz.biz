@@ -1,4 +1,9 @@
 <div id="settings" class="span3 offset4">
+	<div class="span6 offset2">
+		<?php if(isset($classes)) :?>
+			<?php var_dump($classes); ?>
+		<?php endif; ?>
+	</div>
 	<div id="settings-inner">
 		<fieldset>
 			<form method="POST" action="/users/p_settings">
