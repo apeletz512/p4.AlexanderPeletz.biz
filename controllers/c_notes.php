@@ -1,12 +1,27 @@
 <?php
 
-class posts_controller extends base_controller {
+class notes_controller extends base_controller {
 
 	public function __construct() {
         parent::__construct();
         
      }
 	
+    public function p_new_flashcard($class_id = Null) { 
+
+        $_POST['class_id'] = $class_id;
+
+        $flash_card_id = DB::instance(DB_NAME)->insert('flash_cards',$_POST);
+    }
+
+
+
+
+
+
+
+
+
     public function p_add() {
 
         # Prevent null posts
@@ -30,7 +45,7 @@ class posts_controller extends base_controller {
     }
 
 
-public function users() {
+    public function users() {
 	    # If user is blank, they're not logged in; redirect them to the login page
         if(!$this->user) {
             Router::redirect("/users/login");

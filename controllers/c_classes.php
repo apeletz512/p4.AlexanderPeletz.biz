@@ -7,16 +7,16 @@ class classes_controller extends base_controller {
         #echo "users_controller construct called<br><br>";
     } 
 
-    public function classlist() {
+    public function listall() {
         
         $q = "SELECT * 
                 FROM
                 classes";
         
-        $classes = DB::instance(DB_NAME)->select_rows($q);
+        $classlist = DB::instance(DB_NAME)->select_rows($q);
         
-        $this->template->content = View::instance('v_classes');
-        $this->template->content->classes = $classes;
+        $this->template->content = View::instance('v_class_list');
+        $this->template->content->classes = $classlist;
 
         echo $this->template;
 
@@ -25,7 +25,14 @@ class classes_controller extends base_controller {
 
     public function newclass() {
 
-        $this->template->content = View::instance('v_newclass');
+        $q = "  SELECT * 
+                FROM institutions";
+
+        $institution_list = DB::instance(DB_NAME)->select_rows($q);
+
+        $this->template->content = View::instance('v_class_new');
+        $this->template->content->institutions = $institution_list;
+        
 
         echo $this->template;
 
@@ -35,14 +42,45 @@ class classes_controller extends base_controller {
 
     public function p_newclass() {
 
-        $class_name = $_POST['class_name'];
+        $class_id = DB::instance(DB_NAME)->insert("classes",$_POST);
 
-        $class_id = DB::instance(DB_NAME)->insert("classes",$_POST);     
+        Router::redirect('/classes/id/'.$class_id);   
 
 
     }
 
 
+    public function id($class_id = Null) {
+
+        $q = "  SELECT *
+                FROM classes
+                LEFT OUTER JOIN institutions
+                    ON classes.institution_id = institutions.institution_id
+                WHERE class_id = '".$class_id."'";
+
+        $class_data = DB::instance(DB_NAME)->select_rows($q);
+
+        $q = "  SELECT * 
+                FROM flash_cards
+                WHERE class_id = '".$class_id."'";
+
+        $flash_cards = DB::instance(DB_NAME)->select_rows($q);
+
+        $q = "  SELECT *
+                FROM class_notes
+                WHERE class_id = '".$class_id."'";
+
+        $class_notes = DB::instance(DB_NAME)->select_rows($q);
+
+
+        $this->template->content = View::instance('v_class_id');
+        $this->template->content->class = $class_data;
+        $this->template->content->flashcards = $flash_cards;
+        $this->template->content->classnotes = $class_notes;
+        echo $this->template;
+
+
+    }
 
 
     public function signup($error = Null) {

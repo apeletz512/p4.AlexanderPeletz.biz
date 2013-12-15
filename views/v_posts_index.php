@@ -1,3 +1,8 @@
+<div>
+	<?php echo $class_id; ?>
+</div>
+
+
 
 <?php foreach($posts as $post): ?>
 
