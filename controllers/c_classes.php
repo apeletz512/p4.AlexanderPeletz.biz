@@ -1,5 +1,5 @@
 <?php
-class users_controller extends base_controller {
+class classes_controller extends base_controller {
 
     public function __construct() {
         parent::__construct();
@@ -7,13 +7,14 @@ class users_controller extends base_controller {
         #echo "users_controller construct called<br><br>";
     } 
 
-    public function classes() {
-        $q = "  SELECT * 
+    public function classlist() {
+        
+        $q = "SELECT * 
                 FROM
                 classes";
-
+        
         $classes = DB::instance(DB_NAME)->select_rows($q);
-
+        
         $this->template->content = View::instance('v_classes');
         $this->template->content->classes = $classes;
 
@@ -22,8 +23,24 @@ class users_controller extends base_controller {
     }
 
 
+    public function newclass() {
+
+        $this->template->content = View::instance('v_newclass');
+
+        echo $this->template;
 
 
+    }
+
+
+    public function p_newclass() {
+
+        $class_name = $_POST['class_name'];
+
+        $class_id = DB::instance(DB_NAME)->insert("classes",$_POST);     
+
+
+    }
 
 
 
@@ -42,23 +59,23 @@ class users_controller extends base_controller {
 
     public function p_signup() {
 
-    # Ensure unique email
-        $q = "SELECT 
-                users.email
-            FROM users";
-        
-        $emails = DB::instance(DB_NAME)->select_rows($q);
+        # Ensure unique email
+            $q = "SELECT 
+                    users.email
+                FROM users";
+            
+            $emails = DB::instance(DB_NAME)->select_rows($q);
 
-        foreach($emails as $email) {
-            if($_POST['email'] == $email['email']) {
-                Router::redirect("/users/signup/1");
+            foreach($emails as $email) {
+                if($_POST['email'] == $email['email']) {
+                    Router::redirect("/users/signup/1");
+                }
             }
-        }
 
-    # Ensure all fields are populated
-        foreach($_POST as $posts => $value) {
-            if($value == Null) {
-                Router::redirect("/users/signup/2");
+        # Ensure all fields are populated
+            foreach($_POST as $posts => $value) {
+                if($value == Null) {
+                    Router::redirect("/users/signup/2");
             }
         }
 
