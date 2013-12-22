@@ -71,17 +71,9 @@ class classes_controller extends base_controller {
 
         $flash_cards = DB::instance(DB_NAME)->select_rows($q);
 
-        $q = "  SELECT *
-                FROM class_notes
-                WHERE class_id = '".$class_id."'";
-
-        $class_notes = DB::instance(DB_NAME)->select_rows($q);
-
-
         $this->template->content = View::instance('v_class_id');
         $this->template->content->class = $class_data;
         $this->template->content->flashcards = $flash_cards;
-        $this->template->content->classnotes = $class_notes;
         echo $this->template;
     }
 
