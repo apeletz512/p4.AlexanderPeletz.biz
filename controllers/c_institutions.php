@@ -9,8 +9,8 @@ class institutions_controller extends base_controller {
     public function listall() {
 
     	$q = "	SELECT * 
-                FROM
-                institutions";
+                FROM institutions
+                ORDER BY institutions.institution_name";
         
         $institution_list = DB::instance(DB_NAME)->select_rows($q);
         
