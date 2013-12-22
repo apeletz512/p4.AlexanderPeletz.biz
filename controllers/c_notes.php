@@ -7,11 +7,13 @@ class notes_controller extends base_controller {
         
      }
 	
-    public function p_new_flashcard($class_id = Null) { 
+    public function p_newflashcard($class_id = Null) { 
 
         $_POST['class_id'] = $class_id;
 
         $flash_card_id = DB::instance(DB_NAME)->insert('flash_cards',$_POST);
+
+        Router::redirect('/classes/id/'.$class_id);
     }
 
 

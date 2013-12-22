@@ -1,5 +1,27 @@
 
-activateTab();
+//activateTab();
+
+// First, set up the options for the ajax submission
+var options = { 
+    type: 'post',
+    url: '/classes/p_newclass',
+    success: function(response) { 
+        // Load the results recieved from process.php into the results div
+        $('#answerDiv').html(response);       
+    } 
+}; 
+
+// Then attach the ajax form plugin to this form so that when it's submitted, 
+// it will be submitted via ajax    
+$('#newClass').ajaxForm(options);
+
+$(".front").click( function() {
+	var fname = $( this ).attr("name");
+	$(".back[name='"+fname+"']").css("visibility","visible");
+
+});
+
+$("input").attr("maxlength","255");
 
 function activateTab() {
 

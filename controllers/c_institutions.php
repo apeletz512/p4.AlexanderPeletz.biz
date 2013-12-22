@@ -44,11 +44,12 @@ class institutions_controller extends base_controller {
     public function id($institution_id = Null) {
 
         $q = "  SELECT *
-                FROM classes
-                WHERE institution_id = '".$institution_id."'";
+                FROM institutions
+                LEFT OUTER JOIN classes
+                	ON institutions.institution_id = classes.institution_id
+                WHERE institutions.institution_id = '".$institution_id."'";
 
         $class_data = DB::instance(DB_NAME)->select_rows($q);
-
 
         $this->template->content = View::instance('v_institution_id');
         $this->template->content->classes = $class_data;

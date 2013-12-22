@@ -1,8 +1,19 @@
-<div class="span3 offset4">
-	<h2>Here you can see a list of existing classes</h2>
-	<div class="span6 offset2">
-		<?php foreach($classes as $class): ?>
-			<br><a href="/classes/id/<?=$class['class_id']?>"><?=$class['class_name']?></a>
-		<?php endforeach; ?>
+<div class="container">
+	<div class="row">
+		<div class="col-lg-10 col-lg-offset-1 outer">
+			<div class="inner">
+				<h2>Classes</h2>
+				<table class="table">
+				<?php $lastclass = Null; ?>
+				<?php foreach($classes as $class): ?>
+					<?php if($class['institution_name']!=$lastInst): ?>
+						<tr><th><?=$class['institution_name']?></th></tr>
+					<?php endif; ?>
+					<tr><td><a href="/classes/id/<?=$class['class_id']?>"><?=$class['class_number']?> - <?=$class['class_name']?></a></td></tr>
+					<?php $lastInst=$class['institution_name']; ?>
+				<?php endforeach; ?>
+				</table>
+			</div>
+		</div>
 	</div>
 </div>
