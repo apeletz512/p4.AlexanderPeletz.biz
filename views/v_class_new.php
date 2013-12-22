@@ -32,11 +32,11 @@
 							</tr>
 							</table>
 						</form>
+						<div id="answerDiv">
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<div id="answerDiv">
 	</div>
 </div>

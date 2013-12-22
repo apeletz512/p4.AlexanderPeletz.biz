@@ -33,10 +33,24 @@ class institutions_controller extends base_controller {
 
     public function p_newinstitution() {
 
+        
+        $q = "  SELECT * 
+                FROM institutions
+                WHERE upper(institutions.institution_name) = '".strtoupper($_POST['institution_name'])."'
+                ";
+
+        $institution = DB::instance(DB_NAME)->select_rows($q);
+
+        if(count($institution)>0) {
+            echo "An institution with that name already exists. Please enter a new institution name.";
+        }
+
+        else {
+
         $institution_id = DB::instance(DB_NAME)->insert("institutions",$_POST);
 
-        Router::redirect('/institutions/id/'.$institution_id);   
-
+        echo "The institution above was added successfully. <a href='/institutions/id".$institution_id."'>Go there now. </a>"; 
+        }
 
     }
 

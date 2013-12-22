@@ -24,7 +24,7 @@
 	<div class="row">
 		<div class="col-lg-10 col-lg-offset-1 outer">
 			<div class="inner">
-				<form method="POST" action="/notes/p_newflashcard/<?=$class[0]['class_id']?>">
+				<form id="newFlashcard">
 					<div class="row">
 					<div class="col-lg-6 col-lg-offset-2">
 					<h4>Add a new flashcard to this class's deck: </h4>
@@ -42,6 +42,8 @@
 							<td><input type="submit" class="btn btn-danger" value="Create new flashcard"/></td>
 						</tr>
 					</table>
+					<div id="answerDiv">
+					</div>
 					</div>
 					</div>
 				</form>
@@ -51,4 +53,6 @@
 	<br>
 	<br>
 	<br>
+	<div id="classID" name="<?=$class[0]['class_id']?>">
+	</div>
 </div>

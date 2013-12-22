@@ -9,6 +9,11 @@
 						<tr>
 							<td><a href="/classes/id/<?=$class['class_id']?>"><?=$class['class_number']?> - <?=$class['class_name']?></a></td>
 						</tr>
+					<?php else: ?>
+						<tr>
+							<th>No classes have been added to this institution yet.</th>
+						</tr>
+						<?php break; ?>
 					<?php endif; ?>
 				<?php endforeach; ?>
 			</div>
