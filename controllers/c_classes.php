@@ -3,6 +3,7 @@ class classes_controller extends base_controller {
 
     public function __construct() {
         parent::__construct();
+        $_POST = DB::instance(DB_NAME)->sanitize($_POST);
 
     } 
 
@@ -46,25 +47,31 @@ class classes_controller extends base_controller {
 
     public function p_newclass() {
 
-        $q = "  SELECT * FROM classes
-                WHERE classes.institution_id = '".$_POST['institution_id']."'
-                    AND (upper(classes.class_number) = '".strtoupper($_POST['class_number'])."'
-                    or upper(classes.class_name) = '".strtoupper($_POST['class_name'])."')
-            ";
-
-        $class = DB::instance(DB_NAME)->select_rows($q);
-
-        if(count($class)>0) {
-        
-        echo "A class already exists with the same name or number for this institution. Please enter a new name or number.";
-
+        if( ($_POST['institution_id'] == "") || ($_POST['class_number'] == "") || ($_POST['class_name'] == "") ) {
+            echo "Please fill out all fields.";
         }
 
         else {
-            $class_id = DB::instance(DB_NAME)->insert("classes",$_POST);
+            $q = "  SELECT * FROM classes
+                    WHERE classes.institution_id = '".$_POST['institution_id']."'
+                        AND (upper(classes.class_number) = '".strtoupper($_POST['class_number'])."'
+                        or upper(classes.class_name) = '".strtoupper($_POST['class_name'])."')
+                ";
 
-            echo "You've successfully added the class above. <a href='/classes/id/".$class_id."'>Go there now.</a>";
-        }  
+            $class = DB::instance(DB_NAME)->select_rows($q);
+
+                if(count($class)>0) {
+                
+                echo "A class already exists with the same name or number for this institution. Please enter a new name or number.";
+
+                }
+
+                else {
+                    $class_id = DB::instance(DB_NAME)->insert("classes",$_POST);
+
+                    echo "You've successfully added the class above. <a href='/classes/id/".$class_id."'>Go there now.</a>";
+                }  
+        }
     }
 
 
